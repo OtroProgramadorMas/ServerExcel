@@ -1,0 +1,34 @@
+### 📋 Obtener todos los vehículos
+GET http://localhost:8000/vehiculos
+Accept: application/json
+
+### ➕ Insertar un nuevo vehículo
+POST http://localhost:8000/vehiculos
+Content-Type: application/json
+
+{
+    "marca": "Toyota",
+    "modelo": "Corolla",
+    "tipo": "Sedán",
+    "año": 2022,
+    "combustible": "Gasolina",
+    "precio": 25000,
+    "estado": "Disponible"
+}
+
+### ✏️ Actualizar un vehículo (cambia el ID por uno existente)
+PUT http://localhost:8000/vehiculos/7
+Content-Type: application/json
+
+{
+    "marca": "Honda",
+    "modelo": "Civic",
+    "tipo": "Sedán",
+    "año": 2023,
+    "combustible": "Gasolina",
+    "precio": 27000,
+    "estado": "Reservado"
+}
+
+### ❌ Eliminar un vehículo (cambia el ID por uno existente)
+DELETE http://localhost:8000/vehiculos/7
