@@ -1,6 +1,5 @@
 ### 📋 Obtener todos los vehículos
 GET http://localhost:8000/vehiculos
-Accept: application/json
 
 ### ➕ Insertar un nuevo vehículo
 POST http://localhost:8000/vehiculos

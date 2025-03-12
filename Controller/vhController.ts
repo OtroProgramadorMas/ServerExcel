@@ -11,17 +11,48 @@ export const getVehiculos = async (ctx: any) => {
     };
 };
 
-// Insertar un nuevo vehículo
+// // Insertar un nuevo vehículo
+// export const postVehiculos = async (ctx: any) => {
+//     const { request, response } = ctx;
+//     const body = await request.body().value;
+
+//     const nuevoVehiculo = await insertarVehiculo(body);
+//     response.status = 201;
+//     response.body = {
+//         success: true,
+//         data: nuevoVehiculo,
+//     };
+// };
+
 export const postVehiculos = async (ctx: any) => {
     const { request, response } = ctx;
-    const body = await request.body.json();
 
-    const nuevoVehiculo = await insertarVehiculo(body);
-    response.status = 201;
-    response.body = {
-        success: true,
-        data: nuevoVehiculo,
-    };
+    try {
+        const body = await request.body().value;
+
+        if (!body) {
+            response.status = 400;
+            response.body = {
+                success: false,
+                message: "El cuerpo de la solicitud está vacío o no es un JSON válido",
+            };
+            return;
+        }
+
+        const nuevoVehiculo = await insertarVehiculo(body);
+        response.status = 201;
+        response.body = {
+            success: true,
+            data: nuevoVehiculo,
+        };
+    } catch (error) {
+        console.error("Error en postVehiculos:", error);
+        response.status = 500;
+        response.body = {
+            success: false,
+            message: "Error interno del servidor",
+        };
+    }
 };
 
 // Actualizar un vehículo
