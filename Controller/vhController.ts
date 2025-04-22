@@ -22,7 +22,6 @@ export const postVehiculos = async (ctx: any) => {
         success: true,
         data: nuevoVehiculo,
     };
-};
 
 // Inserta desde excel
 export const insertarVehiculoDesdeMiddleware = async (vehiculoData: any) => {
@@ -46,7 +45,41 @@ export const insertarVehiculoDesdeMiddleware = async (vehiculoData: any) => {
     }
 };
 
+// export const postVehiculos = async (ctx: any) => {
+
+//     const { request, response } = ctx;
+
+//     try {
+//         const body = await request.body().value;
+
+//         if (!body) {
+//             response.status = 400;
+//             response.body = {
+//                 success: false,
+//                 message: "El cuerpo de la solicitud está vacío o no es un JSON válido",
+//             };
+//             return;
+//         }
+
+//         const nuevoVehiculo = await insertarVehiculo(body);
+//         response.status = 201;
+//         response.body = {
+//             success: true,
+//             data: nuevoVehiculo,
+//         };
+//     } catch (error) {
+//         console.error("Error en postVehiculos:", error);
+//         response.status = 500;
+//         response.body = {
+//             success: false,
+//             message: "Error interno del servidor",
+//         };
+//     }
+// };
+
+
 // Actualizar un vehículo
+
 export const updateVehiculo = async (ctx: any) => {
     const { request, response, params } = ctx;
     const id = Number(params.id);
