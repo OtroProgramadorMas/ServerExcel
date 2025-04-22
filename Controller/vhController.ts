@@ -11,47 +11,38 @@ export const getVehiculos = async (ctx: any) => {
     };
 };
 
-// // Insertar un nuevo vehículo
-// export const postVehiculos = async (ctx: any) => {
-//     const { request, response } = ctx;
-//     const body = await request.body().value;
-
-//     const nuevoVehiculo = await insertarVehiculo(body);
-//     response.status = 201;
-//     response.body = {
-//         success: true,
-//         data: nuevoVehiculo,
-//     };
-// };
-
+// Insertar un nuevo vehículo
 export const postVehiculos = async (ctx: any) => {
     const { request, response } = ctx;
+    const body = await request.body.json();
 
+    const nuevoVehiculo = await insertarVehiculo(body);
+    response.status = 201;
+    response.body = {
+        success: true,
+        data: nuevoVehiculo,
+    };
+};
+
+// Inserta desde excel
+export const insertarVehiculoDesdeMiddleware = async (vehiculoData: any) => {
     try {
-        const body = await request.body().value;
-
-        if (!body) {
-            response.status = 400;
-            response.body = {
-                success: false,
-                message: "El cuerpo de la solicitud está vacío o no es un JSON válido",
-            };
-            return;
+        if (!vehiculoData) {
+            throw new Error("Los datos del vehículo son requeridos");
         }
 
-        const nuevoVehiculo = await insertarVehiculo(body);
-        response.status = 201;
-        response.body = {
-            success: true,
-            data: nuevoVehiculo,
-        };
+        // Validar campos obligatorios
+        if (!vehiculoData.marca || !vehiculoData.modelo || !vehiculoData.tipo) {
+            throw new Error("Faltan campos obligatorios: marca, modelo o tipo");
+        }
+
+        // Insertar el vehículo en la base de datos
+        const nuevoVehiculo = await insertarVehiculo(vehiculoData);
+
+        return { success: true, data: nuevoVehiculo };
     } catch (error) {
-        console.error("Error en postVehiculos:", error);
-        response.status = 500;
-        response.body = {
-            success: false,
-            message: "Error interno del servidor",
-        };
+        console.error("Error en insertarVehiculoDesdeMiddleware:", error);
+        throw error; // Lanzar el error para que el middleware lo maneje
     }
 };
 
