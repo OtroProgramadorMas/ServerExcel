@@ -22,6 +22,7 @@ export const postVehiculos = async (ctx: any) => {
         success: true,
         data: nuevoVehiculo,
     };
+};
 
 // Inserta desde excel
 export const insertarVehiculoDesdeMiddleware = async (vehiculoData: any) => {
